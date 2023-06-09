@@ -11,9 +11,31 @@ import { AcademicAdvisorsModule } from './academic-advisors/academic-advisors.mo
 import { ShopModule } from './shop/shop.module';
 import { CustomerModule } from './customer/customer.module';
 import { SellerModule } from './seller/seller.module';
-
+import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
-  imports: [UserModule, AdminModule, SchoolModule, TeachersModule, StudentsModule, TeacherAssistentsModule, AcademicAdvisorsModule, ShopModule, CustomerModule, SellerModule],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'iec',
+      password: 'password',
+      database: 'iec',
+      // entities: [UserEntity, TeacherEntity, StudentEntity],
+      entities: [__dirname + '/**/**/*.entity{.ts,.js}'],
+      synchronize: true,
+    }),
+    UserModule,
+    AdminModule,
+    SchoolModule,
+    TeachersModule,
+    StudentsModule,
+    TeacherAssistentsModule,
+    AcademicAdvisorsModule,
+    ShopModule,
+    CustomerModule,
+    SellerModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
